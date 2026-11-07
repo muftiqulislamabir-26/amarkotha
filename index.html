@@ -788,8 +788,7 @@
 খুব বিষন্ন মনে মুগ্ধ চোখে তাকিয়ে ছিলাম।
 রাত যেন সেখানেই থমকে গেল।
 সময় স্থবির,নিশ্বাসবিহীন শরীরে,
-তোমায় পিছু ডাকতে
- খুব ইচ্ছে হলো, 
+তোমায় পিছু ডাকতে খুব ইচ্ছে হলো, 
 তারা?ও তারা!
 যেও না? থেকে যাও।
 আর সামান্যক্ষণ?
@@ -941,12 +940,12 @@
         };
 
         function loadPoems() {
-            const saved = localStorage.getItem('my_site_poems_v7');
+            const saved = localStorage.getItem('my_site_poems_v8');
             if (saved) {
                 poems = JSON.parse(saved);
             } else {
                 poems = defaultPoems;
-                localStorage.setItem('my_site_poems_v7', JSON.stringify(poems));
+                localStorage.setItem('my_site_poems_v8', JSON.stringify(poems));
             }
             renderPoems();
         }
@@ -989,6 +988,7 @@
             const isAdmin = sessionStorage.getItem('is_admin_logged') === 'true';
             if (isAdmin) {
                 document.getElementById('admin-modal').style.display = 'flex';
+                loadAdminFormValues();
             } else {
                 const savedAdmin = localStorage.getItem('admin_credentials');
                 if(!savedAdmin) {
@@ -1011,9 +1011,9 @@
 
         function sendOtpStep(e) {
             e.preventDefault();
-            const user = document.getElementById('reg-user').value;
+            const user = document.getElementById('reg-user').value.trim();
             const pass = document.getElementById('reg-pass').value;
-            const phone = document.getElementById('reg-phone').value;
+            const phone = document.getElementById('reg-phone').value.trim();
 
             generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
             tempRegData = { user, pass, phone };
@@ -1026,7 +1026,7 @@
 
         function verifyOtpAndRegister(e) {
             e.preventDefault();
-            const enteredOtp = document.getElementById('reg-otp-input').value;
+            const enteredOtp = document.getElementById('reg-otp-input').value.trim();
 
             if(enteredOtp === generatedOtp) {
                 localStorage.setItem('admin_credentials', JSON.stringify(tempRegData));
@@ -1042,7 +1042,7 @@
 
         function verifyAdminLogin(e) {
             e.preventDefault();
-            const user = document.getElementById('login-user').value;
+            const user = document.getElementById('login-user').value.trim();
             const pass = document.getElementById('login-pass').value;
 
             const savedAdmin = JSON.parse(localStorage.getItem('admin_credentials') || JSON.stringify(DEFAULT_ADMIN));
@@ -1053,6 +1053,7 @@
                 checkAdminStatus();
                 alert("সফলভাবে অ্যাডমিন হিসেবে লগইন হয়েছে!");
                 document.getElementById('admin-modal').style.display = 'flex';
+                loadAdminFormValues();
             } else {
                 alert("ভুল আইডি বা পাসওয়ার্ড দেওয়া হয়েছে!");
             }
@@ -1092,7 +1093,7 @@
             if(poem) {
                 activePoemId = id;
                 poem.views = (poem.views || 0) + 1;
-                localStorage.setItem('my_site_poems_v7', JSON.stringify(poems));
+                localStorage.setItem('my_site_poems_v8', JSON.stringify(poems));
                 renderPoems();
 
                 document.getElementById('view-title').innerText = poem.title;
@@ -1145,7 +1146,7 @@
             const poem = poems.find(p => p.id === activePoemId);
             if(!poem) return;
 
-            let likedPoems = JSON.parse(localStorage.getItem('my_liked_poems_v7') || '{}');
+            let likedPoems = JSON.parse(localStorage.getItem('my_liked_poems_v8') || '{}');
             const isAlreadyLiked = likedPoems[activePoemId];
 
             if(isAlreadyLiked) {
@@ -1158,15 +1159,15 @@
                 document.getElementById('reader-like-btn').classList.add('liked');
             }
 
-            localStorage.setItem('my_liked_poems_v7', JSON.stringify(likedPoems));
-            localStorage.setItem('my_site_poems_v7', JSON.stringify(poems));
+            localStorage.setItem('my_liked_poems_v8', JSON.stringify(likedPoems));
+            localStorage.setItem('my_site_poems_v8', JSON.stringify(poems));
             
             document.getElementById('reader-like-count').innerText = poem.likes;
             renderPoems();
         }
 
         function checkUserLikedStatus(id) {
-            let likedPoems = JSON.parse(localStorage.getItem('my_liked_poems_v7') || '{}');
+            let likedPoems = JSON.parse(localStorage.getItem('my_liked_poems_v8') || '{}');
             const btn = document.getElementById('reader-like-btn');
             if(likedPoems[id]) {
                 btn.classList.add('liked');
@@ -1204,7 +1205,7 @@
         function deletePoem(id) {
             if(confirm("আপনি কি নিশ্চিতভাবে এই কবিতাটি ডিলিট করতে চান?")) {
                 poems = poems.filter(p => p.id !== id);
-                localStorage.setItem('my_site_poems_v7', JSON.stringify(poems));
+                localStorage.setItem('my_site_poems_v8', JSON.stringify(poems));
                 renderPoems();
             }
         }
@@ -1229,14 +1230,15 @@
             const fileInput = document.getElementById('input-img-file');
             
             const updateAndSave = (imgBase64) => {
-                const currentProfile = JSON.parse(localStorage.getItem('my_site_profile_v7') || '{}');
+                const currentProfile = JSON.parse(localStorage.getItem('my_site_profile_v8') || '{}');
                 const profileData = {
                     name, penName, bio, diary, fb, insta, wa, tele,
                     img: imgBase64 || currentProfile.img || ''
                 };
-                localStorage.setItem('my_site_profile_v7', JSON.stringify(profileData));
+                localStorage.setItem('my_site_profile_v8', JSON.stringify(profileData));
                 updateProfileUI(profileData);
                 closeModal('admin-modal');
+                alert("প্রোফাইল সফলভাবে আপডেট করা হয়েছে!");
             };
 
             if (fileInput.files && fileInput.files[0]) {
@@ -1281,9 +1283,10 @@
                     poems.push(newPoem);
                 }
 
-                localStorage.setItem('my_site_poems_v7', JSON.stringify(poems));
+                localStorage.setItem('my_site_poems_v8', JSON.stringify(poems));
                 renderPoems();
                 closeModal('poem-form-modal');
+                alert("কবিতা সফলভাবে সংরক্ষিত হয়েছে!");
             };
 
             if(audioFile) {
@@ -1303,10 +1306,25 @@
         }
 
         function loadProfile() {
-            const saved = localStorage.getItem('my_site_profile_v7');
+            const saved = localStorage.getItem('my_site_profile_v8');
             if(saved) {
                 const data = JSON.parse(saved);
                 updateProfileUI(data);
+            }
+        }
+
+        function loadAdminFormValues() {
+            const saved = localStorage.getItem('my_site_profile_v8');
+            if(saved) {
+                const data = JSON.parse(saved);
+                if(data.name) document.getElementById('input-name').value = data.name;
+                if(data.penName) document.getElementById('input-pen-name').value = data.penName;
+                if(data.bio) document.getElementById('input-bio').value = data.bio;
+                if(data.diary) document.getElementById('input-diary').value = data.diary;
+                if(data.fb) document.getElementById('input-fb').value = data.fb;
+                if(data.insta) document.getElementById('input-insta').value = data.insta;
+                if(data.wa) document.getElementById('input-wa').value = data.wa;
+                if(data.tele) document.getElementById('input-tele').value = data.tele;
             }
         }
 
@@ -1316,7 +1334,6 @@
             if(data.bio) document.getElementById('author-bio').innerText = data.bio;
             if(data.diary) {
                 document.getElementById('diary-display-text').innerText = `"${data.diary}"`;
-                document.getElementById('input-diary').value = data.diary;
             }
             
             if(data.img) {
@@ -1328,19 +1345,15 @@
             
             if(data.fb) {
                 document.getElementById('link-fb').href = data.fb;
-                document.getElementById('input-fb').value = data.fb;
             }
             if(data.insta) {
                 document.getElementById('link-insta').href = data.insta;
-                document.getElementById('input-insta').value = data.insta;
             }
             if(data.wa) {
                 document.getElementById('link-wa').href = `https://wa.me/${data.wa}`;
-                document.getElementById('input-wa').value = data.wa;
             }
             if(data.tele) {
                 document.getElementById('link-tele').href = `https://t.me/${data.tele}`;
-                document.getElementById('input-tele').value = data.tele;
             }
         }
 
