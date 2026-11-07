@@ -649,7 +649,6 @@
             <span class="close-btn" onclick="closeModal('register-modal')">&times;</span>
             <h2 style="margin-bottom:20px; color:var(--primary-color); text-align:center;"><i class="fas fa-user-shield"></i> নতুন একাউন্ট ও ওটিপি</h2>
             
-            <!-- Step 1: Credentials Form -->
             <form class="admin-form" id="reg-form-step1" onsubmit="sendOtpStep(event)">
                 <div>
                     <label>নতুন আইডি (Username):</label>
@@ -666,7 +665,6 @@
                 <button type="submit" class="save-btn">ওটিপি (OTP) পাঠান</button>
             </form>
 
-            <!-- Step 2: OTP Verification -->
             <form class="admin-form" id="reg-form-step2" style="display:none;" onsubmit="verifyOtpAndRegister(event)">
                 <p style="font-size:13px; color:var(--text-muted); margin-bottom:10px; text-align:center;">আপনার ফোনে একটি ওটিপি পাঠানো হয়েছে। (ডিমো ওটিপি পপআপে দেখতে পাবেন)</p>
                 <div>
@@ -769,9 +767,7 @@
     <script>
         document.getElementById('year').innerText = new Date().getFullYear();
 
-        // Default Credentials (যদি নতুন একাউন্ট তৈরি না করা থাকে)
         const DEFAULT_ADMIN = { user: "abir", pass: "12345", phone: "01700000000" };
-
         let generatedOtp = "";
         let tempRegData = {};
 
@@ -793,7 +789,7 @@
 রাত যেন সেখানেই থমকে গেল।
 সময় স্থবির,নিশ্বাসবিহীন শরীরে,
 তোমায় পিছু ডাকতে
-খুব ইচ্ছে হলো, 
+ খুব ইচ্ছে হলো, 
 তারা?ও তারা!
 যেও না? থেকে যাও।
 আর সামান্যক্ষণ?
@@ -945,12 +941,12 @@
         };
 
         function loadPoems() {
-            const saved = localStorage.getItem('my_site_poems_v6');
+            const saved = localStorage.getItem('my_site_poems_v7');
             if (saved) {
                 poems = JSON.parse(saved);
             } else {
                 poems = defaultPoems;
-                localStorage.setItem('my_site_poems_v6', JSON.stringify(poems));
+                localStorage.setItem('my_site_poems_v7', JSON.stringify(poems));
             }
             renderPoems();
         }
@@ -996,7 +992,6 @@
             } else {
                 const savedAdmin = localStorage.getItem('admin_credentials');
                 if(!savedAdmin) {
-                    // যদি আগে কোনো একাউন্ট তৈরি করা না থাকে, সরাসরি রেজিস্টার মডাল দেখাবে
                     document.getElementById('register-modal').style.display = 'flex';
                 } else {
                     document.getElementById('login-modal').style.display = 'flex';
@@ -1097,7 +1092,7 @@
             if(poem) {
                 activePoemId = id;
                 poem.views = (poem.views || 0) + 1;
-                localStorage.setItem('my_site_poems_v6', JSON.stringify(poems));
+                localStorage.setItem('my_site_poems_v7', JSON.stringify(poems));
                 renderPoems();
 
                 document.getElementById('view-title').innerText = poem.title;
@@ -1150,7 +1145,7 @@
             const poem = poems.find(p => p.id === activePoemId);
             if(!poem) return;
 
-            let likedPoems = JSON.parse(localStorage.getItem('my_liked_poems_v6') || '{}');
+            let likedPoems = JSON.parse(localStorage.getItem('my_liked_poems_v7') || '{}');
             const isAlreadyLiked = likedPoems[activePoemId];
 
             if(isAlreadyLiked) {
@@ -1163,15 +1158,15 @@
                 document.getElementById('reader-like-btn').classList.add('liked');
             }
 
-            localStorage.setItem('my_liked_poems_v6', JSON.stringify(likedPoems));
-            localStorage.setItem('my_site_poems_v6', JSON.stringify(poems));
+            localStorage.setItem('my_liked_poems_v7', JSON.stringify(likedPoems));
+            localStorage.setItem('my_site_poems_v7', JSON.stringify(poems));
             
             document.getElementById('reader-like-count').innerText = poem.likes;
             renderPoems();
         }
 
         function checkUserLikedStatus(id) {
-            let likedPoems = JSON.parse(localStorage.getItem('my_liked_poems_v6') || '{}');
+            let likedPoems = JSON.parse(localStorage.getItem('my_liked_poems_v7') || '{}');
             const btn = document.getElementById('reader-like-btn');
             if(likedPoems[id]) {
                 btn.classList.add('liked');
@@ -1209,7 +1204,7 @@
         function deletePoem(id) {
             if(confirm("আপনি কি নিশ্চিতভাবে এই কবিতাটি ডিলিট করতে চান?")) {
                 poems = poems.filter(p => p.id !== id);
-                localStorage.setItem('my_site_poems_v6', JSON.stringify(poems));
+                localStorage.setItem('my_site_poems_v7', JSON.stringify(poems));
                 renderPoems();
             }
         }
@@ -1234,12 +1229,12 @@
             const fileInput = document.getElementById('input-img-file');
             
             const updateAndSave = (imgBase64) => {
-                const currentProfile = JSON.parse(localStorage.getItem('my_site_profile_v6') || '{}');
+                const currentProfile = JSON.parse(localStorage.getItem('my_site_profile_v7') || '{}');
                 const profileData = {
                     name, penName, bio, diary, fb, insta, wa, tele,
                     img: imgBase64 || currentProfile.img || ''
                 };
-                localStorage.setItem('my_site_profile_v6', JSON.stringify(profileData));
+                localStorage.setItem('my_site_profile_v7', JSON.stringify(profileData));
                 updateProfileUI(profileData);
                 closeModal('admin-modal');
             };
@@ -1286,7 +1281,7 @@
                     poems.push(newPoem);
                 }
 
-                localStorage.setItem('my_site_poems_v6', JSON.stringify(poems));
+                localStorage.setItem('my_site_poems_v7', JSON.stringify(poems));
                 renderPoems();
                 closeModal('poem-form-modal');
             };
@@ -1308,7 +1303,7 @@
         }
 
         function loadProfile() {
-            const saved = localStorage.getItem('my_site_profile_v6');
+            const saved = localStorage.getItem('my_site_profile_v7');
             if(saved) {
                 const data = JSON.parse(saved);
                 updateProfileUI(data);
@@ -1357,7 +1352,7 @@
         }
 
         function loadTheme() {
-            const isDark = localStorage.getItem('my_site_dark_mode'] === 'true';
+            const isDark = localStorage.getItem('my_site_dark_mode') === 'true';
             if(isDark) {
                 document.body.classList.add('dark-mode');
                 document.getElementById('theme-icon').className = "fas fa-sun";
