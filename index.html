@@ -1,170 +1,418 @@
-<Doctype.html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <title>আমার কথা</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আমার কথা — মুফতিকুল ইসলাম আবির</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@300;400;600;700&family=Tiro+Bangla&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
-            --primary: #d4a373;
-            --secondary: #faedcd;
-            --text: #212529;
-            --accent: #e07a5f;
+            --primary-color: #2c3e50;
+            --accent-color: #8b4513;
+            --bg-overlay: rgba(255, 255, 255, 0.88);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-dark: #1a1a1a;
+            --text-muted: #555555;
         }
 
-        body, html {
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            height: 100%;
-            font-family: 'Kalpurush', sans-serif;
-            overflow-x: hidden;
         }
 
-        #bg-canvas {
+        body {
+            font-family: 'Anek Bangla', sans-serif;
+            background: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-dark);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-overlay);
+            backdrop-filter: blur(8px);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        /* Header Layout */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-logo svg {
+            width: 40px;
+            height: 40px;
+            fill: var(--accent-color);
+        }
+
+        .header-logo h1 {
+            font-family: 'Tiro Bangla', serif;
+            font-size: 28px;
+            color: var(--accent-color);
+        }
+
+        .profile-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--accent-color);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .profile-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Author Section */
+        .author-card {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 25px 20px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .author-card h2 {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .author-card .pen-name {
+            font-size: 16px;
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .author-card p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            border: 1px solid #ddd;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+            color: white;
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .social-icon.facebook:hover { background: #1877f2; border-color: #1877f2; }
+        .social-icon.instagram:hover { background: #e4405f; border-color: #e4405f; }
+        .social-icon.whatsapp:hover { background: #25d366; border-color: #25d366; }
+        .social-icon.telegram:hover { background: #0088cc; border-color: #0088cc; }
+
+        /* Poem List */
+        .section-title {
+            font-family: 'Tiro Bangla', serif;
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            border-left: 4px solid var(--accent-color);
+            padding-left: 10px;
+        }
+
+        .poem-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .poem-item {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .poem-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            border-color: var(--accent-color);
+        }
+
+        .poem-info h3 {
+            font-size: 20px;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .poem-info span {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .read-icon {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        /* Modal Box for Reading Poem */
+        .modal {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-        }
-
-        .main-container {
-            max-width: 800px;
-            margin: 50px auto;
-            background: rgba(255, 255, 255, 0.85);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
-        }
-
-        h1 {
-            text-align: center;
-            color: #3d0c0c;
-            font-size: 3rem;
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-        }
-
-        .profile-section {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 2px dashed #d4a373;
-        }
-
-        .profile-img-preview {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 0 auto 15px;
-            display: block;
-            border: 4px solid #fff;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            background-color: #eee;
-        }
-
-        .social-links {
-            margin-top: 15px;
-            display: flex;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
             justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #fdfbf7;
+            max-width: 650px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            border-radius: 12px;
+            padding: 35px;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            border: 1px solid #d4c5b9;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #777;
+        }
+
+        .poem-view-title {
+            font-family: 'Tiro Bangla', serif;
+            font-size: 26px;
+            text-align: center;
+            color: var(--accent-color);
+            margin-bottom: 5px;
+        }
+
+        .poem-view-meta {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 25px;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 10px;
+        }
+
+        .poem-view-body {
+            font-family: 'Tiro Bangla', serif;
+            font-size: 18px;
+            line-height: 1.8;
+            white-space: pre-line;
+            color: #2c2c2c;
+            text-align: center;
+        }
+
+        /* Admin Panel Modal */
+        .admin-form {
+            display: flex;
+            flex-direction: column;
             gap: 15px;
         }
 
-        .social-btn {
-            display: inline-block;
-            padding: 8px 15px;
-            background: #e07a5f;
-            color: white;
-            text-decoration: none;
-            border-radius: 20px;
-            font-weight: bold;
-            transition: transform 0.2s;
+        .admin-form label {
+            font-weight: 600;
+            font-size: 14px;
         }
 
-        .social-btn:hover {
-            transform: scale(1.05);
-        }
-
-        .poem-title {
-            text-align: center;
-            color: #bc6c25;
-            font-size: 2rem;
-            margin-top: 10px;
-        }
-
-        .poem-content {
-            white-space: pre-line;
-            font-size: 1.4rem;
-            line-height: 2;
-            color: #333;
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .admin-panel {
-            margin-top: 50px;
-            padding: 20px;
-            background: #fff;
-            border-radius: 10px;
-            border: 1px solid #ddd;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        textarea, input[type="text"], input[type="file"] {
+        .admin-form input, .admin-form textarea {
             width: 100%;
             padding: 10px;
-            box-sizing: border-box;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 6px;
+            font-family: inherit;
         }
 
-        button {
-            background-color: #4a4e69;
+        .save-btn {
+            background: var(--accent-color);
             color: white;
-            padding: 10px 20px;
             border: none;
-            border-radius: 5px;
+            padding: 12px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 16px;
+            font-weight: bold;
         }
 
-        button:hover {
-            background-color: #22223b;
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            .modal-content {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <canvas id="bg-canvas"></canvas>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="header-logo">
+                <svg viewBox="0 0 24 24">
+                    <path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.1-1.3 4.8-1.4 1.45 0 3.05.3 4.45 1.05.1.05.2.05.3.05.25 0 .45-.2.45-.45V6c-.35-.4-.85-.75-1.5-1zM21 18.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/>
+                </svg>
+                <h1>আমার কথা</h1>
+            </div>
+            <div class="profile-btn" onclick="openAdmin()" title="অ্যাডমিন প্যানেল">
+                <img id="profile-img" src="https://via.placeholder.com/150" alt="প্রোফাইল ছবি">
+            </div>
+        </header>
 
-    <div class="main-container">
-        <div class="profile-section">
-            <img id="profileDisplay" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='%23ccc'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>" alt="Profile Picture" class="profile-img-preview">
-            <h2 id="profileName">আপনার নাম</h2>
-            <p id="profileBio">এখানে আপনার সংক্ষিপ্ত বায়ো বা পরিচিতি থাকবে...</p>
+        <!-- Author Profile -->
+        <div class="author-card">
+            <h2 id="author-name">মুফতিকুল ইসলাম আবির</h2>
+            <div class="pen-name" id="author-pen-name">~ অধম / সূর্য ~</div>
+            <p id="author-bio">কবিতা ও অনুভূতির সংকলন। এখানে আমার লেখা কিছু প্রকাশ ও অপ্রকাশিত কথাগুলো সাজানো রয়েছে।</p>
             
-            <div class="social-links" id="socialContainer">
-                <!-- Social links appear here -->
+            <!-- Social Links Icons -->
+            <div class="social-links">
+                <a href="https://facebook.com" id="link-fb" class="social-icon facebook" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com" id="link-insta" class="social-icon instagram" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/" id="link-wa" class="social-icon whatsapp" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://t.me/" id="link-tele" class="social-icon telegram" target="_blank" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
             </div>
         </div>
 
-        <h1 id="siteTitle">আমার কথা</h1>
-        
-        <h2 class="poem-title" id="poemTitle">অমৃত কাব্য</h2>
-        <div class="poem-content" id="poemBody">
-পুরো দিন টা তোমায় বিরক্ত করার পর,
+        <!-- Poems Section -->
+        <div class="section-title">কবিতাসমূহ</div>
+        <ul class="poem-list" id="poem-list">
+            <!-- Poems rendered dynamically -->
+        </ul>
+    </div>
+
+    <!-- Poem Viewer Modal -->
+    <div class="modal" id="poem-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('poem-modal')">&times;</span>
+            <div class="poem-view-title" id="view-title"></div>
+            <div class="poem-view-meta" id="view-meta"></div>
+            <div class="poem-view-body" id="view-body"></div>
+        </div>
+    </div>
+
+    <!-- Admin Panel Modal -->
+    <div class="modal" id="admin-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('admin-modal')">&times;</span>
+            <h2 style="margin-bottom:20px; color:var(--primary-color);">অ্যাডমিন প্যানেল (তথ্য আপডেট)</h2>
+            <form class="admin-form" onsubmit="saveProfile(event)">
+                <div>
+                    <label>আপনার নাম:</label>
+                    <input type="text" id="input-name" value="মুফতিকুল ইসলাম আবির">
+                </div>
+                <div>
+                    <label>ছদ্মনাম:</label>
+                    <input type="text" id="input-pen-name" value="অধম / সূর্য">
+                </div>
+                <div>
+                    <label>বায়ো:</label>
+                    <textarea id="input-bio" rows="3">কবিতা ও অনুভূতির সংকলন। এখানে আমার লেখা কিছু প্রকাশ ও অপ্রকাশিত কথাগুলো সাজানো রয়েছে।</textarea>
+                </div>
+                <div>
+                    <label>প্রোফাইল ছবির লিংক (URL):</label>
+                    <input type="text" id="input-img" placeholder="https://example.com/photo.jpg">
+                </div>
+                <div>
+                    <label>Facebook Profile Link:</label>
+                    <input type="text" id="input-fb" placeholder="https://facebook.com/yourprofile">
+                </div>
+                <div>
+                    <label>Instagram Profile Link:</label>
+                    <input type="text" id="input-insta" placeholder="https://instagram.com/yourprofile">
+                </div>
+                <div>
+                    <label>WhatsApp Number (with country code):</label>
+                    <input type="text" id="input-wa" placeholder="8801700000000">
+                </div>
+                <div>
+                    <label>Telegram Username:</label>
+                    <input type="text" id="input-tele" placeholder="yourusername">
+                </div>
+                <button type="submit" class="save-btn">সংরক্ষণ করুন</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const poems = [
+            {
+                id: 1,
+                title: "১. অমৃত কাব্য",
+                date: "২০২৩ (লেখা)",
+                penName: "অধম / সূর্য",
+                content: 
+`পুরো দিন টা তোমায় বিরক্ত করার পর,
 তোমার বিদায়ের পালা ছিল,
 আমি তাকিয়ে ছিলাম তোমার যাওয়ার পাণে।
 কোন এক মায়াবী,
@@ -189,116 +437,221 @@
 হাসি মুখে বিদায় দিয়েছিলাম,
 যদিও বিদায় বেলায়, 
 আখি সামান্য অশ্রুসিক্ত হয়।
-        </div>
+আমি তোমার কাছে ভিক্ষুকের মত ভালোবাসা ভিক্ষে চেয়েছিলাম,
+তুমি বাস্তবতার উদাহরণ দিয়েছিলে।
+আমি তোমার কাছে নিজেকে ক্ষুদ্র ক্ষুদ্র করে প্রকাশ করলাম,
+আমার দুঃখকে তুলে ধরে,আবদার করলাম সহানুভূতির। 
+আশ্রয় পেতে চাইলাম তোমার কল্পনীয় কোলে,
+তুমি মায়া বাড়াতে নিষেধ করলে।
+অতঃপর নিজের কর্ম শাস্তি উপভোগ এর তরে 
+ আপনাকে ক্ষত-বিক্ষত করলাম,
+নিজেকে পোড়ালাম
+আহার-তৃপ্তি ছাড়িয়া,আপন মৃত্যুদণ্ড কার্যকর করেছিলাম।
+তবুও ক্ষান্ত হই নি!
+আমি তোমার কাছে পুষ্করিণী দেয়া
+উপেক্ষার থেকেও কঠিন মৃত্যু যন্ত্রণার শাস্তি 
+কামনা করেছিলাম।
+তুমি আমায় কষ্ট পেতে নিষেধ করলে,
+অথচ দেখ,
+কষ্টখানা তারার নিজ বাহুতে দেয়া।
+ধীরে ধীরে তারও বিরক্ত/রাগের কারণে পরিণত হলাম।
+হয়ত আবার তারার দ্বারা 
+ উপেক্ষার প্রারম্ভ রচিত হবে।
+তুমি আমার অন্তরঙ্গে ছিলে,
+সময়ের ব্যাবধানে,
+উন্মাদ ভালোবাসা পেয়ে 
+নিজেকে সরিয়ে নিলে।
+দোহাই দিলে ললাটের!
+কিন্তু আমি যে কাউকে হুট করে ভালোবাসি নি, সবাই ভালোবাসা পায় না...
+পাবার যোগ্যতা রাখে না।
+তুমি অনন্যা!
+সূর্যের প্রেমিকা...
+তারা আমার সৃষ্টির অংশ,
+আমার cigarette ফুকে 
+অশ্রুসিক্ত আখিতে লেখা 
+অমৃত কাব্যর অংশ।
+তুমি একটা ফুল।
+তুমি নিরাময়ী!
+তাই তোমাকে আমার মত করে কে চাইবে?
+কেই বা ভালোবাসবে?
+তেমন কোন নাফস আদৌ জন্মিয়েছে?
+জন্মায় নি,জন্মাবে না।
+কভুও জন্মাবে না...!`
+            },
+            {
+                id: 2,
+                title: "২. কথা",
+                date: "৩০/০৪/২৫",
+                penName: "অধম",
+                content: 
+    `কথা।
+দুটি বর্ণ; একটি শব্দ
+হাজার ব্যাঞ্জণা! 
 
-        <div class="admin-panel">
-            <h3>কন্ট্রোল প্যানেল (এডিট করুন)</h3>
-            
-            <div class="form-group">
-                <label>আপনার ছবি:</label>
-                <input type="file" id="imageLoader" accept="image/*">
-            </div>
+কথা শুধু নহে মৌখিক 
+প্রকাশ করা যায় প্রতীকি, আঙ্গিক।
+বোবা-কালাও যে কথা কয়,
+শোন না দিয়া মন?
+ইহারাও যে দামী!
+বোঝ না কেন হে জন?
 
-            <div class="form-group">
-                <label>আপনার নাম:</label>
-                <input type="text" id="nameInput" placeholder="নাম লিখুন">
-            </div>
+কথায় তৈরি হয় জীবন 
+কথাই নিশ্চিত করে মরণ।
+হাজার হাজার সমরাস্ত্রের চেয়েও ভয়ংকর ;
+কথাই মরণাপন্ন কে করে তুলে জীবন্ত
+আবার জীবন্ত কে করে মৃত।
+বুক ছিদ্র করে নিমিষেই নিতে পারে জান
+আবার আকুল করে ফুলেও ভরিয়ে দিতে পারে পরাণ। 
 
-            <div class="form-group">
-                <label>আপনার বায়ো:</label>
-                <textarea id="bioInput" rows="2" placeholder="কিছু কথা লিখুন..."></textarea>
-            </div>
+কথা!
+ইহা হয় প্রকাশিত,না হয় অপ্রকাশিত। 
+কথায় বাধে যুদ্ধ 
+কথায় বিরাজ করে শান্তি।
+কথাই গড়ে তুলে জগৎ 
+কথাই জগৎ কে করে ধ্বংস!
+কথাই আনতে পারে ক্ষমতা
+কথাই করতে পারে উৎখাত। 
+কারন?
+অন্ধ হইয়াছিল,ঘুমাইয়া ছিল যে বিনা কথায়
+জাগ্রত করিল তারে সেই বিদ্রোহী কথায়!
 
-            <h4>সোশ্যাল মিডিয়া লিংক:</h4>
-            <div class="form-group">
-                <label>WhatsApp Number (with country code):</label>
-                <input type="text" id="waInput" placeholder="8801xxxxxxxxx">
-            </div>
-            <div class="form-group">
-                <label>Instagram Username:</label>
-                <input type="text" id="instaInput" placeholder="username">
-            </div>
-            <div class="form-group">
-                <label>Telegram Username:</label>
-                <input type="text" id="teleInput" placeholder="username">
-            </div>
+আমাদিগের প্রকাশিত ছন্দহীন কবিতা।অপ্রকাশিত কথা। 
 
-            <button onclick="updateProfile()">প্রোফাইল আপডেট করুন</button>
-        </div>
-    </div>
+ছেলেরা না বলা কথা, "বাবা,তোমায় ভালোবাসি!"
+সন্তানের না বলা কথা,"মা,তোমায় ভালোবাসি"
+প্রেমিকের না বলা কথা,"রিণী(পুষ্করিণী),তোমায় আমি ভালোবাসি।তোমায় চাই। চারপাশে তোমার গন্ধে ছেয়ে গেছে। আমি বিভ্রান্ত ;বিচ্ছেদ যন্ত্রণায় কাতর। আমার তোমাকে প্রয়োজন, আলিঙ্গনের প্রয়োজন।শুধু তোমাকে প্রয়োজন"
+দেশপ্রেমিকের না বলা কথা, "হে আমার দেশ!
+আমার জন্মভূমি!তোমায় আমি ভালোবাসি!"
+ভাই এর ভাইকে/বোনকে না বলা কথা,"ভাই/বোন তোকে অনেক ভালোবাসি রে"
+সাগরেদ এর না বলা কথা,"ওস্তাদ আপনাকে ভালোবাসি"
+গুনাহগারের না বলা কথা,"হে খোদা!মাফ করে দাও!
+ইয়া রব!মাফি! মাফি!" 
 
-    <script>
-        // Dynamic Moving Background Animation
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
+শুধুমাত্র কথা বলা হয়নি বলে, কত শত প্রাণ ঝরেছে। 
+শুধুমাত্র কথা বলা হয়নি বলে, কতশত মানুষ জীবন্ত লাশ হয়েছে। 
+শুধুমাত্র কথা বলা হয়নি বলে, কত সম্পর্কের ইতি টানতে হয়েছে। 
+শুধুমাত্র কথা বলা হয়নি বলে, প্রেমিকাকে পাওয়া যায়নি। 
+শুধুমাত্র কথা বলা হয়নি বলে, আজও 'ভালোবাসি' প্রকাশ পায়নি 
+শুধুমাত্র কথা বলা হয়নি বলে,ওস্তাদ-সাগরেদের দূরত কমে নি।
+শুধুমাত্র কথা বলা হয়নি বলে,দেশ প্রেমিকেরা আজ কোণঠাসা হয়ে পড়েছে।
+শুধুমাত্র কথা বলা হয়নি বলে, 
+ভাইকে ভাই বলে ডাকা হয়নি। 
+বোনকে আদর করে কাছে পাওয়া যায়নি। 
+মিটিয়ে গিয়েছে শৈশব, 
+সেই শৈশব হাতছানি দিয়ে আর খেলায় মাতা হয় নি।
+শুধুমাত্র কথা বলা হয়নি বলে,"বাবা মাকে আজও বলা হয়নি, ভালোবাসি।"
+শুধুমাত্র কথা বলা হয়নি বলে,"আজও মাফি পাওয়া যায় নি"
+শুধুমাত্র কথা বলা হয়নি বলে,"তুমি রয়ে গেলে 'আনন্দের ছেঁড়া চিঠিতে'; অধরায়;
+আমার অপূর্ণ ইপ্সায়। 
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+ফেলে আসা জিনিস আর জীবন থেকে বিদায় নেয়া আত্মা দুটোই হয়ত কাছাকাছি। 
+আর অস্তিত্ব? কথা রূপেই
+সে সাঁতরিয়ে বেড়ায় সময়ের স্রোতে। 
 
-        const particles = [];
-        for(let i=0; i<100; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                size: Math.random() * 3 + 1,
-                speedX: (Math.random() - 0.5) * 1,
-                speedY: (Math.random() - 0.5) * 1
+তাই হয়তো রবি ঠাকুর বলেন,
+"...মায়ের কথা মেলায় যেন,
+আমার খেলার মাঝে...
+মা গিয়েছে,
+মা গিয়েছে যেতে যেতে,গানটি গেছে ফেলে..." 
+
+কথাই আমি
+কথাই তুমি।
+কথাই জয় করে মন
+কথা দিয়েই হতে পারো সেই শ্রেষ্ঠ জন।
+কথাই অবিনশ্বর 
+আর কথাই
+মহাকাল!`
+            }
+        ];
+
+        window.onload = function() {
+            renderPoems();
+            loadProfile();
+        };
+
+        function renderPoems() {
+            const list = document.getElementById('poem-list');
+            list.innerHTML = '';
+            poems.forEach(poem => {
+                const li = document.createElement('li');
+                li.className = 'poem-item';
+                li.onclick = () => openPoem(poem.id);
+                li.innerHTML = `
+                    <div class="poem-info">
+                        <h3>${poem.title}</h3>
+                        <span>${poem.date} • ~ ${poem.penName} ~</span>
+                    </div>
+                    <div class="read-icon">পড়ুন &rarr;</div>
+                `;
+                list.appendChild(li);
             });
         }
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
-            
-            particles.forEach(p => {
-                p.x += p.speedX;
-                p.y += p.speedY;
-
-                if(p.x < 0 || p.x > canvas.width) p.speedX *= -1;
-                if(p.y < 0 || p.y > canvas.height) p.speedY *= -1;
-
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fill();
-            });
-            requestAnimationFrame(animate);
+        function openPoem(id) {
+            const poem = poems.find(p => p.id === id);
+            if(poem) {
+                document.getElementById('view-title').innerText = poem.title;
+                document.getElementById('view-meta').innerText = `প্রকাশ/লেখা: ${poem.date} | লেখক: ${poem.penName}`;
+                document.getElementById('view-body').innerText = poem.content;
+                document.getElementById('poem-modal').style.display = 'flex';
+            }
         }
-        animate();
 
-        // Profile Update Logic
-        document.getElementById('imageLoader').addEventListener('change', function(e) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                document.getElementById('profileDisplay').src = event.target.result;
+        function openAdmin() {
+            document.getElementById('admin-modal').style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function saveProfile(e) {
+            e.preventDefault();
+            const name = document.getElementById('input-name').value;
+            const penName = document.getElementById('input-pen-name').value;
+            const bio = document.getElementById('input-bio').value;
+            const img = document.getElementById('input-img').value;
+            const fb = document.getElementById('input-fb').value;
+            const insta = document.getElementById('input-insta').value;
+            const wa = document.getElementById('input-wa').value;
+            const tele = document.getElementById('input-tele').value;
+
+            const profileData = { name, penName, bio, img, fb, insta, wa, tele };
+            localStorage.setItem('my_site_profile', JSON.stringify(profileData));
+
+            updateProfileUI(profileData);
+            closeModal('admin-modal');
+        }
+
+        function loadProfile() {
+            const saved = localStorage.getItem('my_site_profile');
+            if(saved) {
+                const data = JSON.parse(saved);
+                updateProfileUI(data);
             }
-            reader.readAsDataURL(e.target.files[0]);
-        });
+        }
 
-        function updateProfile() {
-            const name = document.getElementById('nameInput').value;
-            const bio = document.getElementById('bioInput').value;
-            const wa = document.getElementById('waInput').value;
-            const insta = document.getElementById('instaInput').value;
-            const tele = document.getElementById('teleInput').value;
-
-            if(name) document.getElementById('profileName').innerText = name;
-            if(bio) document.getElementById('profileBio').innerText = bio;
-
-            const socialContainer = document.getElementById('socialContainer');
-            socialContainer.innerHTML = '';
-
-            if(wa) {
-                socialContainer.innerHTML += `<a href="https://wa.me/${wa}" class="social-btn" target="_blank">WhatsApp</a>`;
+        function updateProfileUI(data) {
+            if(data.name) document.getElementById('author-name').innerText = data.name;
+            if(data.penName) document.getElementById('author-pen-name').innerText = `~ ${data.penName} ~`;
+            if(data.bio) document.getElementById('author-bio').innerText = data.bio;
+            if(data.img) document.getElementById('profile-img').src = data.img;
+            
+            if(data.fb) {
+                document.getElementById('link-fb').href = data.fb;
+                document.getElementById('input-fb').value = data.fb;
             }
-            if(insta) {
-                socialContainer.innerHTML += `<a href="https://instagram.com/${insta}" class="social-btn" target="_blank">Instagram</a>`;
+            if(data.insta) {
+                document.getElementById('link-insta').href = data.insta;
+                document.getElementById('input-insta').value = data.insta;
             }
-            if(tele) {
-                socialContainer.innerHTML += `<a href="https://t.me/${tele}" class="social-btn" target="_blank">Telegram</a>`;
+            if(data.wa) {
+                document.getElementById('link-wa').href = `https://wa.me/${data.wa}`;
+                document.getElementById('input-wa').value = data.wa;
+            }
+            if(data.tele) {
+                document.getElementById('link-tele').href = `https://t.me/${data.tele}`;
+                document.getElementById('input-tele').value = data.tele;
             }
         }
     </script>
