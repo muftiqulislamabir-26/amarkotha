@@ -1,0 +1,306 @@
+<Doctype.html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <title>আমার কথা</title>
+    <style>
+        :root {
+            --primary: #d4a373;
+            --secondary: #faedcd;
+            --text: #212529;
+            --accent: #e07a5f;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Kalpurush', sans-serif;
+            overflow-x: hidden;
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+        }
+
+        .main-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            text-align: center;
+            color: #3d0c0c;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .profile-section {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px dashed #d4a373;
+        }
+
+        .profile-img-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 15px;
+            display: block;
+            border: 4px solid #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            background-color: #eee;
+        }
+
+        .social-links {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-btn {
+            display: inline-block;
+            padding: 8px 15px;
+            background: #e07a5f;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .social-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .poem-title {
+            text-align: center;
+            color: #bc6c25;
+            font-size: 2rem;
+            margin-top: 10px;
+        }
+
+        .poem-content {
+            white-space: pre-line;
+            font-size: 1.4rem;
+            line-height: 2;
+            color: #333;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .admin-panel {
+            margin-top: 50px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        textarea, input[type="text"], input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4a4e69;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background-color: #22223b;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="main-container">
+        <div class="profile-section">
+            <img id="profileDisplay" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='%23ccc'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>" alt="Profile Picture" class="profile-img-preview">
+            <h2 id="profileName">আপনার নাম</h2>
+            <p id="profileBio">এখানে আপনার সংক্ষিপ্ত বায়ো বা পরিচিতি থাকবে...</p>
+            
+            <div class="social-links" id="socialContainer">
+                <!-- Social links appear here -->
+            </div>
+        </div>
+
+        <h1 id="siteTitle">আমার কথা</h1>
+        
+        <h2 class="poem-title" id="poemTitle">অমৃত কাব্য</h2>
+        <div class="poem-content" id="poemBody">
+পুরো দিন টা তোমায় বিরক্ত করার পর,
+তোমার বিদায়ের পালা ছিল,
+আমি তাকিয়ে ছিলাম তোমার যাওয়ার পাণে।
+কোন এক মায়াবী,
+সূর্যের চক্ষুর আড়ালা হচ্ছে।
+যেতে পথে কেশগুচ্ছ,
+উড়ছে বসন্তের হাওয়ায়।
+আমি সেই তারার যাওয়ার পাণে,
+খুব বিষন্ন মনে মুগ্ধ চোখে তাকিয়ে ছিলাম।
+রাত যেন সেখানেই থমকে গেল।
+সময় স্থবির,নিশ্বাসবিহীন শরীরে,
+তোমায় পিছু ডাকতে
+খুব ইচ্ছে হলো, 
+তারা?ও তারা!
+যেও না? থেকে যাও।
+আর সামান্যক্ষণ?
+আমি আটকিয়ে ছিলাম!
+তুমি ফের নি।থাম নি...
+তোমায় আমি বলেছিলাম,
+জোর করব? না যেতে দিব?
+তুমি যেতে চাইলে...
+আমি আর আটকানোর সাহস করি নি
+হাসি মুখে বিদায় দিয়েছিলাম,
+যদিও বিদায় বেলায়, 
+আখি সামান্য অশ্রুসিক্ত হয়।
+        </div>
+
+        <div class="admin-panel">
+            <h3>কন্ট্রোল প্যানেল (এডিট করুন)</h3>
+            
+            <div class="form-group">
+                <label>আপনার ছবি:</label>
+                <input type="file" id="imageLoader" accept="image/*">
+            </div>
+
+            <div class="form-group">
+                <label>আপনার নাম:</label>
+                <input type="text" id="nameInput" placeholder="নাম লিখুন">
+            </div>
+
+            <div class="form-group">
+                <label>আপনার বায়ো:</label>
+                <textarea id="bioInput" rows="2" placeholder="কিছু কথা লিখুন..."></textarea>
+            </div>
+
+            <h4>সোশ্যাল মিডিয়া লিংক:</h4>
+            <div class="form-group">
+                <label>WhatsApp Number (with country code):</label>
+                <input type="text" id="waInput" placeholder="8801xxxxxxxxx">
+            </div>
+            <div class="form-group">
+                <label>Instagram Username:</label>
+                <input type="text" id="instaInput" placeholder="username">
+            </div>
+            <div class="form-group">
+                <label>Telegram Username:</label>
+                <input type="text" id="teleInput" placeholder="username">
+            </div>
+
+            <button onclick="updateProfile()">প্রোফাইল আপডেট করুন</button>
+        </div>
+    </div>
+
+    <script>
+        // Dynamic Moving Background Animation
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const particles = [];
+        for(let i=0; i<100; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 3 + 1,
+                speedX: (Math.random() - 0.5) * 1,
+                speedY: (Math.random() - 0.5) * 1
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+            
+            particles.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+
+                if(p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+                if(p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Profile Update Logic
+        document.getElementById('imageLoader').addEventListener('change', function(e) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('profileDisplay').src = event.target.result;
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+        function updateProfile() {
+            const name = document.getElementById('nameInput').value;
+            const bio = document.getElementById('bioInput').value;
+            const wa = document.getElementById('waInput').value;
+            const insta = document.getElementById('instaInput').value;
+            const tele = document.getElementById('teleInput').value;
+
+            if(name) document.getElementById('profileName').innerText = name;
+            if(bio) document.getElementById('profileBio').innerText = bio;
+
+            const socialContainer = document.getElementById('socialContainer');
+            socialContainer.innerHTML = '';
+
+            if(wa) {
+                socialContainer.innerHTML += `<a href="https://wa.me/${wa}" class="social-btn" target="_blank">WhatsApp</a>`;
+            }
+            if(insta) {
+                socialContainer.innerHTML += `<a href="https://instagram.com/${insta}" class="social-btn" target="_blank">Instagram</a>`;
+            }
+            if(tele) {
+                socialContainer.innerHTML += `<a href="https://t.me/${tele}" class="social-btn" target="_blank">Telegram</a>`;
+            }
+        }
+    </script>
+</body>
+</html>
