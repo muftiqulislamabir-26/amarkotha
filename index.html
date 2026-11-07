@@ -19,7 +19,6 @@
             --modal-bg: #fdfbf7;
         }
 
-        /* Dark Mode Variables */
         body.dark-mode {
             --primary-color: #e2e8f0;
             --accent-color: #d97706;
@@ -34,14 +33,12 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            /* Anti-copy protection for main text elements */
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
         }
 
-        /* Allow typing in inputs */
         input, textarea {
             -webkit-user-select: text;
             -moz-user-select: text;
@@ -74,7 +71,6 @@
             border: 1px solid rgba(255, 255, 255, 0.4);
         }
 
-        /* Header Layout */
         header {
             display: flex;
             justify-content: space-between;
@@ -143,22 +139,10 @@
             justify-content: center;
         }
 
-        .profile-btn:hover {
-            transform: scale(1.08);
-        }
+        .profile-btn:hover { transform: scale(1.08); }
+        .profile-btn img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-btn i { font-size: 22px; color: #777; }
 
-        .profile-btn img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .profile-btn i {
-            font-size: 22px;
-            color: #777;
-        }
-
-        /* Author Section */
         .author-card {
             text-align: center;
             margin-bottom: 30px;
@@ -189,7 +173,6 @@
             margin-bottom: 15px;
         }
 
-        /* Social Links */
         .social-links {
             display: flex;
             justify-content: center;
@@ -223,13 +206,12 @@
         .social-icon.whatsapp:hover { background: #25d366; border-color: #25d366; }
         .social-icon.telegram:hover { background: #0088cc; border-color: #0088cc; }
 
-        /* Writer's Diary Section (Notebook) */
         .diary-section {
             background: var(--card-bg);
             border-left: 4px solid var(--accent-color);
             padding: 15px 20px;
             border-radius: 8px;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.04);
             text-align: left;
         }
@@ -239,9 +221,6 @@
             font-size: 18px;
             color: var(--accent-color);
             margin-bottom: 6px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
         .diary-content {
@@ -252,7 +231,6 @@
             font-style: italic;
         }
 
-        /* Poem List Section */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -281,9 +259,7 @@
             transition: background 0.2s;
         }
 
-        .add-poem-btn:hover {
-            background: #6e360f;
-        }
+        .add-poem-btn:hover { background: #6e360f; }
 
         .poem-list {
             list-style: none;
@@ -353,7 +329,6 @@
             font-size: 14px;
         }
 
-        /* Modal Box Styling */
         .modal {
             display: none;
             position: fixed;
@@ -408,7 +383,6 @@
             padding-bottom: 10px;
         }
 
-        /* Reader Interactive bar (Like & Font Size) */
         .reader-toolbar {
             display: flex;
             justify-content: space-between;
@@ -464,7 +438,6 @@
             margin-bottom: 30px;
         }
 
-        /* Media Container (Audio/Video) */
         .poem-media-section {
             margin-top: 25px;
             border-top: 1px solid rgba(0,0,0,0.1);
@@ -503,7 +476,6 @@
             border: none;
         }
 
-        /* Admin & Form Inputs */
         .admin-form {
             display: flex;
             flex-direction: column;
@@ -539,7 +511,6 @@
 
         .save-btn:hover { opacity: 0.9; }
 
-        /* Footer Copyright */
         footer {
             text-align: center;
             padding: 20px 0 10px 0;
@@ -557,7 +528,6 @@
 <body>
 
     <div class="container">
-        <!-- Header -->
         <header>
             <div class="header-logo">
                 <svg viewBox="0 0 24 24">
@@ -574,13 +544,11 @@
             </div>
         </header>
 
-        <!-- Author Profile -->
         <div class="author-card">
             <h2 id="author-name">মুফতিকুল ইসলাম আবির</h2>
             <div class="pen-name" id="author-pen-name">~ অধম / সূর্য ~</div>
             <p id="author-bio">কবিতা ও অনুভূতির সংকলন। এখানে আমার লেখা কিছু প্রকাশ ও অপ্রকাশিত কথাগুলো সাজানো রয়েছে।</p>
             
-            <!-- Social Links -->
             <div class="social-links">
                 <a href="#" id="link-fb" class="social-icon facebook" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
                 <a href="#" id="link-insta" class="social-icon instagram" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
@@ -588,28 +556,21 @@
                 <a href="#" id="link-tele" class="social-icon telegram" target="_blank" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
             </div>
 
-            <!-- Writer's Notebook Diary Box -->
             <div class="diary-section">
-                <div class="diary-title">
-                    <span><i class="fas fa-book-open"></i> লেখকের ডায়েরি / নোটবুক</span>
-                </div>
+                <div class="diary-title"><i class="fas fa-book-open"></i> লেখকের ডায়েরি / নোটবুক</div>
                 <div class="diary-content" id="diary-display-text">
                     "শব্দ যখন নীরবতা ভেঙে কবিতার রূপ নেয়, তখনই প্রকৃত অনুভূতির জন্ম হয়। অপ্রকাশিত কথাগুলোই একসময় অমরত্ব লাভ করে।"
                 </div>
             </div>
         </div>
 
-        <!-- Poems Section -->
         <div class="section-header">
             <div class="section-title">কবিতাসমূহ</div>
             <button class="add-poem-btn" onclick="openPoemModalForAdd()"><i class="fas fa-plus"></i> নতুন কবিতা</button>
         </div>
-        <ul class="poem-list" id="poem-list">
-            <!-- Dynamic List -->
-        </ul>
+        <ul class="poem-list" id="poem-list"></ul>
     </div>
 
-    <!-- Footer Copyright -->
     <footer>
         &copy; <span id="year"></span> <strong>আমার কথা</strong> — সর্বস্বত্ব সংরক্ষিত | প্রতিষ্ঠাতা ও রচয়িতা: <strong>মুফতিকুল ইসলাম আবির (অধম / সূর্য)</strong>
     </footer>
@@ -621,7 +582,6 @@
             <div class="poem-view-title" id="view-title"></div>
             <div class="poem-view-meta" id="view-meta"></div>
             
-            <!-- Reader Toolbar: Font size & Like Button -->
             <div class="reader-toolbar">
                 <div class="font-controls">
                     <button class="font-btn" onclick="adjustFontSize(2)">অ+</button>
@@ -635,7 +595,6 @@
 
             <div class="poem-view-body" id="view-body"></div>
 
-            <!-- Media Section -->
             <div class="poem-media-section" id="media-section" style="display:none;">
                 <div id="audio-box" style="display:none;">
                     <h4>🎧 অডিও আবৃত্তি শুনুন:</h4>
@@ -724,7 +683,7 @@
                     <input type="file" id="poem-audio-file" accept="audio/*">
                 </div>
                 <div>
-                    <label>ভিডিও লিংক (YouTube / Facebook Embed বা Link):</label>
+                    <label>ভিডিও লিংক (YouTube / Facebook Link):</label>
                     <input type="text" id="poem-video-link" placeholder="যেমন: https://www.youtube.com/watch?v=xxxxx">
                 </div>
                 <button type="submit" class="save-btn" id="poem-save-btn-text">কবিতা প্রকাশ করুন</button>
@@ -910,12 +869,12 @@
         };
 
         function loadPoems() {
-            const saved = localStorage.getItem('my_site_poems_v3');
+            const saved = localStorage.getItem('my_site_poems_v4');
             if (saved) {
                 poems = JSON.parse(saved);
             } else {
                 poems = defaultPoems;
-                localStorage.setItem('my_site_poems_v3', JSON.stringify(poems));
+                localStorage.setItem('my_site_poems_v4', JSON.stringify(poems));
             }
             renderPoems();
         }
@@ -967,9 +926,8 @@
             const poem = poems.find(p => p.id === id);
             if(poem) {
                 activePoemId = id;
-                // Increase view count
                 poem.views = (poem.views || 0) + 1;
-                localStorage.setItem('my_site_poems_v3', JSON.stringify(poems));
+                localStorage.setItem('my_site_poems_v4', JSON.stringify(poems));
                 renderPoems();
 
                 document.getElementById('view-title').innerText = poem.title;
@@ -980,7 +938,6 @@
                 checkUserLikedStatus(id);
                 resetFontSize();
 
-                // Media handling
                 const mediaSection = document.getElementById('media-section');
                 const audioBox = document.getElementById('audio-box');
                 const videoBox = document.getElementById('video-box');
@@ -1023,7 +980,7 @@
             const poem = poems.find(p => p.id === activePoemId);
             if(!poem) return;
 
-            let likedPoems = JSON.parse(localStorage.getItem('my_liked_poems') || '{}');
+            let likedPoems = JSON.parse(localStorage.getItem('my_liked_poems_v4') || '{}');
             const isAlreadyLiked = likedPoems[activePoemId];
 
             if(isAlreadyLiked) {
@@ -1036,15 +993,15 @@
                 document.getElementById('reader-like-btn').classList.add('liked');
             }
 
-            localStorage.setItem('my_liked_poems', JSON.stringify(likedPoems));
-            localStorage.setItem('my_site_poems_v3', JSON.stringify(poems));
+            localStorage.setItem('my_liked_poems_v4', JSON.stringify(likedPoems));
+            localStorage.setItem('my_site_poems_v4', JSON.stringify(poems));
             
             document.getElementById('reader-like-count').innerText = poem.likes;
             renderPoems();
         }
 
         function checkUserLikedStatus(id) {
-            let likedPoems = JSON.parse(localStorage.getItem('my_liked_poems') || '{}');
+            let likedPoems = JSON.parse(localStorage.getItem('my_liked_poems_v4') || '{}');
             const btn = document.getElementById('reader-like-btn');
             if(likedPoems[id]) {
                 btn.classList.add('liked');
@@ -1086,7 +1043,7 @@
         function deletePoem(id) {
             if(confirm("আপনি কি নিশ্চিতভাবে এই কবিতাটি ডিলিট করতে চান?")) {
                 poems = poems.filter(p => p.id !== id);
-                localStorage.setItem('my_site_poems_v3', JSON.stringify(poems));
+                localStorage.setItem('my_site_poems_v4', JSON.stringify(poems));
                 renderPoems();
             }
         }
@@ -1111,12 +1068,12 @@
             const fileInput = document.getElementById('input-img-file');
             
             const updateAndSave = (imgBase64) => {
-                const currentProfile = JSON.parse(localStorage.getItem('my_site_profile_v3') || '{}');
+                const currentProfile = JSON.parse(localStorage.getItem('my_site_profile_v4') || '{}');
                 const profileData = {
                     name, penName, bio, diary, fb, insta, wa, tele,
                     img: imgBase64 || currentProfile.img || ''
                 };
-                localStorage.setItem('my_site_profile_v3', JSON.stringify(profileData));
+                localStorage.setItem('my_site_profile_v4', JSON.stringify(profileData));
                 updateProfileUI(profileData);
                 closeModal('admin-modal');
             };
@@ -1163,7 +1120,7 @@
                     poems.push(newPoem);
                 }
 
-                localStorage.setItem('my_site_poems_v3', JSON.stringify(poems));
+                localStorage.setItem('my_site_poems_v4', JSON.stringify(poems));
                 renderPoems();
                 closeModal('poem-form-modal');
             };
@@ -1176,20 +1133,16 @@
                 reader.readAsDataURL(audioFile);
             } else {
                 let existingAudio = "";
-                let existingViews = 0;
-                let existingLikes = 0;
                 if(editId) {
                     const existing = poems.find(item => item.id == editId);
-                    if(existing) {
-                        existingAudio = existing.audio;
-                    }
+                    if(existing) { existingAudio = existing.audio; }
                 }
                 processPoemSave(existingAudio);
             }
         }
 
         function loadProfile() {
-            const saved = localStorage.getItem('my_site_profile_v3');
+            const saved = localStorage.getItem('my_site_profile_v4');
             if(saved) {
                 const data = JSON.parse(saved);
                 updateProfileUI(data);
@@ -1247,4 +1200,3 @@
     </script>
 </body>
 </html>
-    
