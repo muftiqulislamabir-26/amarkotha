@@ -145,7 +145,7 @@
 
         .author-card {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             padding: 25px 20px;
             background: var(--card-bg);
             border-radius: 12px;
@@ -229,6 +229,23 @@
             line-height: 1.6;
             white-space: pre-line;
             font-style: italic;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: inherit;
+            background: var(--card-bg);
+            color: var(--text-dark);
+            font-size: 14px;
         }
 
         .section-header {
@@ -477,6 +494,63 @@
             border: none;
         }
 
+        .comments-section {
+            margin-top: 30px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            padding-top: 20px;
+        }
+
+        .comments-section h4 {
+            font-size: 16px;
+            color: var(--primary-color);
+            margin-bottom: 12px;
+        }
+
+        .comment-list {
+            list-style: none;
+            max-height: 180px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .comment-item {
+            background: rgba(0,0,0,0.03);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            position: relative;
+        }
+
+        .comment-item strong { color: var(--accent-color); }
+        .comment-del-btn {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #dc2626;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .comment-form input, .comment-form textarea {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 13px;
+            background: var(--card-bg);
+            color: var(--text-dark);
+        }
+
         .admin-form {
             display: flex;
             flex-direction: column;
@@ -512,20 +586,6 @@
 
         .save-btn:hover { opacity: 0.9; }
 
-        .auth-switch {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 14px;
-            color: var(--text-muted);
-            cursor: pointer;
-        }
-
-        .auth-switch span {
-            color: var(--accent-color);
-            font-weight: bold;
-            text-decoration: underline;
-        }
-
         footer {
             text-align: center;
             padding: 20px 0 10px 0;
@@ -552,7 +612,7 @@
             </div>
             <div class="header-controls">
                 <button class="theme-toggle" onclick="toggleTheme()" title="ডার্ক/লাইট মোড"><i class="fas fa-moon" id="theme-icon"></i></button>
-                <div class="profile-btn" onclick="handleProfileClick()" title="অ্যাডমিন লগইন / একাউন্ট">
+                <div class="profile-btn" onclick="handleProfileClick()" title="অ্যাডমিন লগইন / প্যানেল">
                     <img id="profile-img" src="" alt="" style="display:none;">
                     <i id="profile-placeholder" class="fas fa-user"></i>
                 </div>
@@ -577,6 +637,11 @@
                     "শব্দ যখন নীরবতা ভেঙে কবিতার রূপ নেয়, তখনই প্রকৃত অনুভূতির জন্ম হয়। অপ্রকাশিত কথাগুলোই একসময় অমরত্ব লাভ করে।"
                 </div>
             </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" id="search-input" class="search-bar" placeholder="🔍 শিরোনাম দিয়ে কবিতা খুঁজুন..." oninput="filterPoems()">
         </div>
 
         <div class="section-header">
@@ -620,6 +685,16 @@
                     <div class="video-container" id="video-frame-container"></div>
                 </div>
             </div>
+
+            <div class="comments-section">
+                <h4>💬 পাঠকদের মন্তব্য</h4>
+                <ul class="comment-list" id="comment-list"></ul>
+                <form class="comment-form" onsubmit="addComment(event)">
+                    <input type="text" id="comment-name" required placeholder="আপনার নাম">
+                    <textarea id="comment-text" rows="2" required placeholder="আপনার মতামত লিখুন..."></textarea>
+                    <button type="submit" class="save-btn" style="padding: 8px; font-size: 14px;">মতামত প্রকাশ করুন</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -631,50 +706,14 @@
             <form class="admin-form" onsubmit="verifyAdminLogin(event)">
                 <div>
                     <label>অ্যাডমিন আইডি:</label>
-                    <input type="text" id="login-user" required placeholder="আপনার আইডি">
+                    <input type="text" id="login-user" required placeholder="আইডি দিন">
                 </div>
                 <div>
                     <label>পাসওয়ার্ড:</label>
-                    <input type="password" id="login-pass" required placeholder="পাসওয়ার্ড">
+                    <input type="password" id="login-pass" required placeholder="পাসওয়ার্ড দিন">
                 </div>
                 <button type="submit" class="save-btn">লগইন করুন</button>
             </form>
-            <div class="auth-switch" onclick="switchToRegister()">একাউন্ট নেই? <span>নতুন একাউন্ট তৈরি করুন</span></div>
-        </div>
-    </div>
-
-    <!-- Register & OTP Setup Modal -->
-    <div class="modal" id="register-modal">
-        <div class="modal-content" style="max-width: 400px;">
-            <span class="close-btn" onclick="closeModal('register-modal')">&times;</span>
-            <h2 style="margin-bottom:20px; color:var(--primary-color); text-align:center;"><i class="fas fa-user-shield"></i> নতুন একাউন্ট ও ওটিপি</h2>
-            
-            <form class="admin-form" id="reg-form-step1" onsubmit="sendOtpStep(event)">
-                <div>
-                    <label>নতুন আইডি (Username):</label>
-                    <input type="text" id="reg-user" required placeholder="যেমন: abir">
-                </div>
-                <div>
-                    <label>নতুন পাসওয়ার্ড:</label>
-                    <input type="password" id="reg-pass" required placeholder="শক্তিশালী পাসওয়ার্ড">
-                </div>
-                <div>
-                    <label>ফোন নম্বর (OTP এর জন্য):</label>
-                    <input type="text" id="reg-phone" required placeholder="017xxxxxxxx">
-                </div>
-                <button type="submit" class="save-btn">ওটিপি (OTP) পাঠান</button>
-            </form>
-
-            <form class="admin-form" id="reg-form-step2" style="display:none;" onsubmit="verifyOtpAndRegister(event)">
-                <p style="font-size:13px; color:var(--text-muted); margin-bottom:10px; text-align:center;">আপনার ফোনে একটি ওটিপি পাঠানো হয়েছে। (ডিমো ওটিপি পপআপে দেখতে পাবেন)</p>
-                <div>
-                    <label>৪ ডিজিটের ওটিপি কোড:</label>
-                    <input type="text" id="reg-otp-input" required placeholder="যেমন: 4829" maxlength="4">
-                </div>
-                <button type="submit" class="save-btn">ভেরিফাই ও একাউন্ট তৈরি করুন</button>
-            </form>
-
-            <div class="auth-switch" onclick="switchToLogin()">ইতিমধ্যে একাউন্ট আছে? <span>লগইন করুন</span></div>
         </div>
     </div>
 
@@ -688,24 +727,24 @@
             </div>
             <form class="admin-form" onsubmit="saveProfile(event)">
                 <div>
-                    <label>প্রোফাইল ছবি পরিবর্তন করুন:</label>
+                    <label>প্রোফাইল ছবি পরিবর্তন করুন (ঐচ্ছিক):</label>
                     <input type="file" id="input-img-file" accept="image/*">
                 </div>
                 <div>
                     <label>আপনার নাম:</label>
-                    <input type="text" id="input-name" value="মুফতিকুল ইসলাম আবির">
+                    <input type="text" id="input-name" required>
                 </div>
                 <div>
                     <label>ছদ্মনাম:</label>
-                    <input type="text" id="input-pen-name" value="অধম / সূর্য">
+                    <input type="text" id="input-pen-name" required>
                 </div>
                 <div>
                     <label>বায়ো:</label>
-                    <textarea id="input-bio" rows="3">কবিতা ও অনুভূতির সংকলন। এখানে আমার লেখা কিছু প্রকাশ ও অপ্রকাশিত কথাগুলো সাজানো রয়েছে।</textarea>
+                    <textarea id="input-bio" rows="3" required></textarea>
                 </div>
                 <div>
                     <label>লেখকের ডায়েরি / নোটবুক নোটস:</label>
-                    <textarea id="input-diary" rows="3">শব্দ যখন নীরবতা ভেঙে কবিতার রূপ নেয়, তখনই প্রকৃত অনুভূতির জন্ম হয়। অপ্রকাশিত কথাগুলোই একসময় অমরত্ব লাভ করে।</textarea>
+                    <textarea id="input-diary" rows="3" required></textarea>
                 </div>
                 <div>
                     <label>Facebook Profile Link:</label>
@@ -723,7 +762,7 @@
                     <label>Telegram Username:</label>
                     <input type="text" id="input-tele" placeholder="username">
                 </div>
-                <button type="submit" class="save-btn">সংরক্ষণ করুন</button>
+                <button type="submit" class="save-btn">পরিবর্তন সংরক্ষণ করুন</button>
             </form>
         </div>
     </div>
@@ -767,9 +806,17 @@
     <script>
         document.getElementById('year').innerText = new Date().getFullYear();
 
-        const DEFAULT_ADMIN = { user: "abir", pass: "12345", phone: "01700000000" };
-        let generatedOtp = "";
-        let tempRegData = {};
+        // 🔐 আপনার নতুন সেট করা অ্যাডমিন আইডি ও পাসওয়ার্ড
+        const ADMIN_USER = "abir";
+        const ADMIN_PASS = "abir0404";
+
+        const defaultProfile = {
+            name: "মুফতিকুল ইসলাম আবির",
+            penName: "অধম / সূর্য",
+            bio: "কবিতা ও অনুভূতির সংকলন। এখানে আমার লেখা কিছু প্রকাশ ও অপ্রকাশিত কথাগুলো সাজানো রয়েছে।",
+            diary: "শব্দ যখন নীরবতা ভেঙে কবিতার রূপ নেয়, তখনই প্রকৃত অনুভূতির জন্ম হয়। অপ্রকাশিত কথাগুলোই একসময় অমরত্ব লাভ করে।",
+            fb: "", insta: "", wa: "", tele: "", img: ""
+        };
 
         const defaultPoems = [
             {
@@ -841,7 +888,7 @@
 তেমন কোন নাফস আদৌ জন্মিয়েছে?
 জন্মায় নি,জন্মাবে না।
 কভুও জন্মাবে না...!`,
-                audio: "", video: "", views: 0, likes: 0
+                audio: "", video: "", views: 0, likes: 0, comments: []
             },
             {
                 id: 2,
@@ -925,12 +972,11 @@
 কথাই অবিনশ্বর 
 আর কথাই
 মহাকাল!`,
-                audio: "", video: "", views: 0, likes: 0
+                audio: "", video: "", views: 0, likes: 0, comments: []
             }
         ];
 
         let poems = [];
-        let activePoemId = null;
 
         window.onload = function() {
             loadPoems();
@@ -940,24 +986,25 @@
         };
 
         function loadPoems() {
-            const saved = localStorage.getItem('my_site_poems_v8');
+            const saved = localStorage.getItem('my_site_poems_v11');
             if (saved) {
                 poems = JSON.parse(saved);
             } else {
                 poems = defaultPoems;
-                localStorage.setItem('my_site_poems_v8', JSON.stringify(poems));
+                localStorage.setItem('my_site_poems_v11', JSON.stringify(poems));
             }
-            renderPoems();
+            renderPoems(poems);
         }
 
-        function renderPoems() {
+        function renderPoems(poemsToRender) {
             const list = document.getElementById('poem-list');
             list.innerHTML = '';
             const isAdmin = sessionStorage.getItem('is_admin_logged') === 'true';
 
-            poems.forEach(poem => {
+            poemsToRender.forEach(poem => {
                 if(poem.views === undefined) poem.views = 0;
                 if(poem.likes === undefined) poem.likes = 0;
+                if(poem.comments === undefined) poem.comments = [];
 
                 const li = document.createElement('li');
                 li.className = 'poem-item';
@@ -970,11 +1017,12 @@
                         <div class="poem-stats">
                             <span><i class="fas fa-eye"></i> ${poem.views} বার পঠিত</span>
                             <span><i class="fas fa-heart" style="color:#e11d48;"></i> ${poem.likes} লাইক</span>
+                            <span><i class="fas fa-comment"></i> ${poem.comments.length} মন্তব্য</span>
                         </div>
                     </div>
                     <div class="poem-actions" style="display: ${isAdmin ? 'flex' : 'none'};">
-                        <button class="action-btn edit" onclick="openPoemForEdit(${poem.id})" title="এডিট করুন"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn delete" onclick="deletePoem(${poem.id})" title="ডিলিট করুন"><i class="fas fa-trash-alt"></i></button>
+                        <button class="action-btn edit" onclick="event.stopPropagation(); openPoemForEdit(${poem.id})" title="এডিট করুন"><i class="fas fa-edit"></i></button>
+                        <button class="action-btn delete" onclick="event.stopPropagation(); deletePoem(${poem.id})" title="ডিলিট করুন"><i class="fas fa-trash-alt"></i></button>
                     </div>
                     <div style="margin-left: 10px;">
                         <span class="read-badge" onclick="openPoem(${poem.id})" style="cursor:pointer;">পড়ুন &rarr;</span>
@@ -984,59 +1032,19 @@
             });
         }
 
+        function filterPoems() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const filtered = poems.filter(p => p.title.toLowerCase().includes(query) || p.content.toLowerCase().includes(query));
+            renderPoems(filtered);
+        }
+
         function handleProfileClick() {
             const isAdmin = sessionStorage.getItem('is_admin_logged') === 'true';
             if (isAdmin) {
                 document.getElementById('admin-modal').style.display = 'flex';
                 loadAdminFormValues();
             } else {
-                const savedAdmin = localStorage.getItem('admin_credentials');
-                if(!savedAdmin) {
-                    document.getElementById('register-modal').style.display = 'flex';
-                } else {
-                    document.getElementById('login-modal').style.display = 'flex';
-                }
-            }
-        }
-
-        function switchToRegister() {
-            closeModal('login-modal');
-            document.getElementById('register-modal').style.display = 'flex';
-        }
-
-        function switchToLogin() {
-            closeModal('register-modal');
-            document.getElementById('login-modal').style.display = 'flex';
-        }
-
-        function sendOtpStep(e) {
-            e.preventDefault();
-            const user = document.getElementById('reg-user').value.trim();
-            const pass = document.getElementById('reg-pass').value;
-            const phone = document.getElementById('reg-phone').value.trim();
-
-            generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
-            tempRegData = { user, pass, phone };
-
-            alert(`📱 [OTP Simulation] আপনার ফোন নম্বর (${phone}) এ ওটিপি কোড পাঠানো হয়েছে। কোডটি হলো: ${generatedOtp}`);
-            
-            document.getElementById('reg-form-step1').style.display = 'none';
-            document.getElementById('reg-form-step2').style.display = 'flex';
-        }
-
-        function verifyOtpAndRegister(e) {
-            e.preventDefault();
-            const enteredOtp = document.getElementById('reg-otp-input').value.trim();
-
-            if(enteredOtp === generatedOtp) {
-                localStorage.setItem('admin_credentials', JSON.stringify(tempRegData));
-                alert("অভিনন্দন! আপনার নতুন অ্যাডমিন একাউন্ট সফলভাবে তৈরি হয়েছে। এখন লগইন করুন।");
-                closeModal('register-modal');
-                document.getElementById('reg-form-step1').style.display = 'flex';
-                document.getElementById('reg-form-step2').style.display = 'none';
                 document.getElementById('login-modal').style.display = 'flex';
-            } else {
-                alert("ভুল ওটিপি কোড দেওয়া হয়েছে! আবার চেষ্টা করুন।");
             }
         }
 
@@ -1045,9 +1053,7 @@
             const user = document.getElementById('login-user').value.trim();
             const pass = document.getElementById('login-pass').value;
 
-            const savedAdmin = JSON.parse(localStorage.getItem('admin_credentials') || JSON.stringify(DEFAULT_ADMIN));
-
-            if (user === savedAdmin.user && pass === savedAdmin.pass) {
+            if (user === ADMIN_USER && pass === ADMIN_PASS) {
                 sessionStorage.setItem('is_admin_logged', 'true');
                 closeModal('login-modal');
                 checkAdminStatus();
@@ -1072,7 +1078,7 @@
             if (addBtn) {
                 addBtn.style.display = isAdmin ? 'block' : 'none';
             }
-            renderPoems();
+            renderPoems(poems);
         }
 
         let currentFontSize = 18;
@@ -1088,13 +1094,14 @@
             document.getElementById('view-body').style.fontSize = '18px';
         }
 
+        let activePoemId = null;
         function openPoem(id) {
             const poem = poems.find(p => p.id === id);
             if(poem) {
                 activePoemId = id;
                 poem.views = (poem.views || 0) + 1;
-                localStorage.setItem('my_site_poems_v8', JSON.stringify(poems));
-                renderPoems();
+                localStorage.setItem('my_site_poems_v11', JSON.stringify(poems));
+                renderPoems(poems);
 
                 document.getElementById('view-title').innerText = poem.title;
                 document.getElementById('view-meta').innerText = `প্রকাশ/লেখা: ${poem.date} | লেখক: ${poem.penName} | © মুফতিকুল ইসলাম আবির`;
@@ -1103,6 +1110,7 @@
                 
                 checkUserLikedStatus(id);
                 resetFontSize();
+                renderComments(poem);
 
                 const mediaSection = document.getElementById('media-section');
                 const audioBox = document.getElementById('audio-box');
@@ -1146,7 +1154,7 @@
             const poem = poems.find(p => p.id === activePoemId);
             if(!poem) return;
 
-            let likedPoems = JSON.parse(localStorage.getItem('my_liked_poems_v8') || '{}');
+            let likedPoems = JSON.parse(localStorage.getItem('my_liked_poems_v11') || '{}');
             const isAlreadyLiked = likedPoems[activePoemId];
 
             if(isAlreadyLiked) {
@@ -1159,20 +1167,69 @@
                 document.getElementById('reader-like-btn').classList.add('liked');
             }
 
-            localStorage.setItem('my_liked_poems_v8', JSON.stringify(likedPoems));
-            localStorage.setItem('my_site_poems_v8', JSON.stringify(poems));
+            localStorage.setItem('my_liked_poems_v11', JSON.stringify(likedPoems));
+            localStorage.setItem('my_site_poems_v11', JSON.stringify(poems));
             
             document.getElementById('reader-like-count').innerText = poem.likes;
-            renderPoems();
+            renderPoems(poems);
         }
 
         function checkUserLikedStatus(id) {
-            let likedPoems = JSON.parse(localStorage.getItem('my_liked_poems_v8') || '{}');
+            let likedPoems = JSON.parse(localStorage.getItem('my_liked_poems_v11') || '{}');
             const btn = document.getElementById('reader-like-btn');
             if(likedPoems[id]) {
                 btn.classList.add('liked');
             } else {
                 btn.classList.remove('liked');
+            }
+        }
+
+        function renderComments(poem) {
+            const commentList = document.getElementById('comment-list');
+            commentList.innerHTML = '';
+            const isAdmin = sessionStorage.getItem('is_admin_logged') === 'true';
+
+            if(!poem.comments || poem.comments.length === 0) {
+                commentList.innerHTML = '<li style="font-size:13px; color:var(--text-muted); text-align:center;">কোনো মন্তব্য নেই। প্রথম মন্তব্যটি করুন!</li>';
+                return;
+            }
+
+            poem.comments.forEach((c, index) => {
+                const li = document.createElement('li');
+                li.className = 'comment-item';
+                li.innerHTML = `
+                    <strong>${c.name}</strong>: ${c.text}
+                    ${isAdmin ? `<button class="comment-del-btn" onclick="deleteComment(${poem.id}, ${index})"><i class="fas fa-trash"></i></button>` : ''}
+                `;
+                commentList.appendChild(li);
+            });
+        }
+
+        function addComment(e) {
+            e.preventDefault();
+            if(!activePoemId) return;
+            const name = document.getElementById('comment-name').value.trim();
+            const text = document.getElementById('comment-text').value.trim();
+
+            const poem = poems.find(p => p.id === activePoemId);
+            if(poem) {
+                if(!poem.comments) poem.comments = [];
+                poem.comments.push({ name, text });
+                localStorage.setItem('my_site_poems_v11', JSON.stringify(poems));
+                renderComments(poem);
+                renderPoems(poems);
+                document.getElementById('comment-name').value = '';
+                document.getElementById('comment-text').value = '';
+            }
+        }
+
+        function deleteComment(poemId, commentIndex) {
+            const poem = poems.find(p => p.id === poemId);
+            if(poem) {
+                poem.comments.splice(commentIndex, 1);
+                localStorage.setItem('my_site_poems_v11', JSON.stringify(poems));
+                renderComments(poem);
+                renderPoems(poems);
             }
         }
 
@@ -1205,8 +1262,8 @@
         function deletePoem(id) {
             if(confirm("আপনি কি নিশ্চিতভাবে এই কবিতাটি ডিলিট করতে চান?")) {
                 poems = poems.filter(p => p.id !== id);
-                localStorage.setItem('my_site_poems_v8', JSON.stringify(poems));
-                renderPoems();
+                localStorage.setItem('my_site_poems_v11', JSON.stringify(poems));
+                renderPoems(poems);
             }
         }
 
@@ -1230,12 +1287,12 @@
             const fileInput = document.getElementById('input-img-file');
             
             const updateAndSave = (imgBase64) => {
-                const currentProfile = JSON.parse(localStorage.getItem('my_site_profile_v8') || '{}');
+                const currentProfile = JSON.parse(localStorage.getItem('my_site_profile_v11') || JSON.stringify(defaultProfile));
                 const profileData = {
                     name, penName, bio, diary, fb, insta, wa, tele,
                     img: imgBase64 || currentProfile.img || ''
                 };
-                localStorage.setItem('my_site_profile_v8', JSON.stringify(profileData));
+                localStorage.setItem('my_site_profile_v11', JSON.stringify(profileData));
                 updateProfileUI(profileData);
                 closeModal('admin-modal');
                 alert("প্রোফাইল সফলভাবে আপডেট করা হয়েছে!");
@@ -1278,13 +1335,14 @@
                         video,
                         audio: audioBase64 || "",
                         views: 0,
-                        likes: 0
+                        likes: 0,
+                        comments: []
                     };
                     poems.push(newPoem);
                 }
 
-                localStorage.setItem('my_site_poems_v8', JSON.stringify(poems));
-                renderPoems();
+                localStorage.setItem('my_site_poems_v11', JSON.stringify(poems));
+                renderPoems(poems);
                 closeModal('poem-form-modal');
                 alert("কবিতা সফলভাবে সংরক্ষিত হয়েছে!");
             };
@@ -1306,26 +1364,23 @@
         }
 
         function loadProfile() {
-            const saved = localStorage.getItem('my_site_profile_v8');
-            if(saved) {
-                const data = JSON.parse(saved);
-                updateProfileUI(data);
-            }
+            const saved = localStorage.getItem('my_site_profile_v11');
+            const data = saved ? JSON.parse(saved) : defaultProfile;
+            updateProfileUI(data);
         }
 
         function loadAdminFormValues() {
-            const saved = localStorage.getItem('my_site_profile_v8');
-            if(saved) {
-                const data = JSON.parse(saved);
-                if(data.name) document.getElementById('input-name').value = data.name;
-                if(data.penName) document.getElementById('input-pen-name').value = data.penName;
-                if(data.bio) document.getElementById('input-bio').value = data.bio;
-                if(data.diary) document.getElementById('input-diary').value = data.diary;
-                if(data.fb) document.getElementById('input-fb').value = data.fb;
-                if(data.insta) document.getElementById('input-insta').value = data.insta;
-                if(data.wa) document.getElementById('input-wa').value = data.wa;
-                if(data.tele) document.getElementById('input-tele').value = data.tele;
-            }
+            const saved = localStorage.getItem('my_site_profile_v11');
+            const data = saved ? JSON.parse(saved) : defaultProfile;
+            
+            document.getElementById('input-name').value = data.name || "";
+            document.getElementById('input-pen-name').value = data.penName || "";
+            document.getElementById('input-bio').value = data.bio || "";
+            document.getElementById('input-diary').value = data.diary || "";
+            document.getElementById('input-fb').value = data.fb || "";
+            document.getElementById('input-insta').value = data.insta || "";
+            document.getElementById('input-wa').value = data.wa || "";
+            document.getElementById('input-tele').value = data.tele || "";
         }
 
         function updateProfileUI(data) {
@@ -1341,20 +1396,15 @@
                 imgEl.src = data.img;
                 imgEl.style.display = 'block';
                 document.getElementById('profile-placeholder').style.display = 'none';
+            } else {
+                document.getElementById('profile-img').style.display = 'none';
+                document.getElementById('profile-placeholder').style.display = 'block';
             }
             
-            if(data.fb) {
-                document.getElementById('link-fb').href = data.fb;
-            }
-            if(data.insta) {
-                document.getElementById('link-insta').href = data.insta;
-            }
-            if(data.wa) {
-                document.getElementById('link-wa').href = `https://wa.me/${data.wa}`;
-            }
-            if(data.tele) {
-                document.getElementById('link-tele').href = `https://t.me/${data.tele}`;
-            }
+            if(data.fb) document.getElementById('link-fb').href = data.fb;
+            if(data.insta) document.getElementById('link-insta').href = data.insta;
+            if(data.wa) document.getElementById('link-wa').href = `https://wa.me/${data.wa}`;
+            if(data.tele) document.getElementById('link-tele').href = `https://t.me/${data.tele}`;
         }
 
         function toggleTheme() {
